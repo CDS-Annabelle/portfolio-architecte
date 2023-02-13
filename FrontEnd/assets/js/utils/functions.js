@@ -1,14 +1,9 @@
-export async function retrieveDataFromUrl(url){
-    const response = await fetch(url);
-    const data = await response.json();
-    return data;
-}
 
-
-export function displayGalleryObjets(data, container, objectType){
+export function displayGalleryObjectsByCategoryId(data, categoryId){
+    const container = document.getElementById('gallery');
     container.innerHTML='';
     data.forEach(element => {
-        if (element.category.name === objectType || objectType === "all") {
+        if (element.category.id === parseInt(categoryId) || categoryId === "0") {
         container.innerHTML +=`
             <figure>
             <img src="${element.imageUrl}" alt="${element.title}">
@@ -17,4 +12,22 @@ export function displayGalleryObjets(data, container, objectType){
         `;
         }
     })
+}
+
+export function addListenersToCategoryButtons(works, categoryId){
+    const categoriesBtns = Array.from(document.querySelectorAll(".btn-name-category"))
+    categoriesBtns.forEach(elt => {
+        elt.addEventListener("click", (e)=>{
+            // on parse en entier le dataset
+            const categoryId = e.target.dataset.categoryId;
+            displayGalleryObjectsByCategoryId(works, categoryId);
+        })
+    })
+}
+
+export function displayGalleryMenu(categories){
+    const categoryButtonsContainer = document.querySelector(".btns-category");
+    categories.forEach(elt =>{
+        categoryButtonsContainer.innerHTML += `<button id="btn${elt.name}" data-category-id="${elt.id}" class="btn-name-category">${elt.name}</button>`
+    });
 }
