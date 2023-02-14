@@ -6,20 +6,20 @@ const password = document.getElementById("password");
 const submit = document.getElementById("submit");
 
 const fetchHandler = async () => {
+    const user = {
+        email: email.value, 
+        password: password.value,
+    }
+    const options = {
+        method: "POST",
+        //JSON.stringify : convertit en chaîne JSON
+        body: JSON.stringify(user),
+        headers: {"Content-type": "application/json",},
+    }
     try {
-        const response = await fetch(url, {
-            method: "POST",
-            //JSON.stringify : convertit en chaîne JSON
-            body: JSON.stringify({
-                email: email.value, 
-                password: password.value,
-        }),
-        headers: {
-            "Content-type": "application/json",
-        },
-    });
+        const response = await fetch(url, options);
     if (response.status === 200) {
-        const userData = response.json();
+        const userData = await response.json();
         console.log(userData);
         if (userData) {
             window.sessionStorage.setItem("userData", JSON.stringify(userData));
@@ -36,6 +36,6 @@ const fetchHandler = async () => {
 
 submit.addEventListener("click", (e) => {
     e.preventDefault(); 
-    fetchHandler.apply();
+    fetchHandler();
 });
 

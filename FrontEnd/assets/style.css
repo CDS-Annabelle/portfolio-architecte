@@ -306,6 +306,10 @@ a.passwordForgot {
 	padding: 10px;
 }
 
+button.edit {
+	display: none;
+}
+
 #contact {
 	width: 50%;
 	margin: auto;
