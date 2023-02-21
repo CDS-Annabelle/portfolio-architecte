@@ -2,38 +2,41 @@ const url = "http://localhost:5678/api/users/login";
 const errorMessage = document.getElementById("errorMessage");
 const email = document.getElementById("email");
 const password = document.getElementById("password");
+
 const submit = document.getElementById("submit");
 
-submit.addEventListener("click", (e) => {
-    e.preventDefault();
-    fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-type": "application/json",
-            },
-            //JSON.stringify : convertit en chaîne JSON
-            body: JSON.stringify({email: email.value, password: password.value}),
-        })
 
-        .then(response => {
-            if (response.status === 200) {
-                return response.json();
-            } else {
-                errorMessage.innerHTML = "Votre email et/ou mot de passe ne correspondent pas";
-                return Promise.reject();
-            }
-        })
-
-        .then(userData => {
-            if (userData) {
-            // sessionStorage id et token tant que le navigateur est ouvert
+const fetchHandler = async () => {
+    const user = {
+        email: email.value, 
+        password: password.value,
+    }
+    const options = {
+        method: "POST",
+        //JSON.stringify : convertit en chaîne JSON
+        body: JSON.stringify(user),
+        headers: {"Content-type": "application/json",},
+    }
+    try {
+        const response = await fetch(url, options);
+    if (response.status === 200) {
+        const userData = await response.json();
+        console.log(userData);
+        if (userData) {
             window.sessionStorage.setItem("userData", JSON.stringify(userData));
             window.sessionStorage.setItem("token", userData.token);
             window.location.replace("./index.html");
             }
-        })
+        }else {
+            errorMessage.innerHTML = "Votre email et/ou mot de passe ne correspondent pas";
+        }
+    } catch (error) {
+        console.log(error);        
+    }
+};
 
-    .catch(() => console.log("error"));
-    
-})
+submit.addEventListener("click", (e) => {
+    e.preventDefault(); 
+    fetchHandler();
+});
 

@@ -31,3 +31,4 @@ export function displayGalleryMenu(categories){
         categoryButtonsContainer.innerHTML += `<button id="btn${elt.name}" data-category-id="${elt.id}" class="btn-name-category">${elt.name}</button>`
     });
 }
+
