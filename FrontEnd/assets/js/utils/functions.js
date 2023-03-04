@@ -32,3 +32,10 @@ export function displayGalleryMenu(categories){
     });
 }
 
+
+export function toggleModal() {
+    const modalContainer = document.querySelector(".modal-container");
+    modalContainer.classList.toggle('active')
+}
+
+

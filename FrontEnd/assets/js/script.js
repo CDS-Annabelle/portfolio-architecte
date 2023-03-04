@@ -12,7 +12,7 @@ if (token != null)
 {
     edit.style.visibility = "visible";
 }
-/* ---*/
+
 
 displayGalleryMenu(categories);
 displayGalleryObjectsByCategoryId(works, "0");

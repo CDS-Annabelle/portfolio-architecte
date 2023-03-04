@@ -1,106 +1,74 @@
-// Modal
-/*const modalContainer = document.querySelector(".modal-container");
-const modalTriggers = document.querySelectorAll(".modal-trigger");
-const url = 'http://localhost:5678/api/works';
-
-
-modalTriggers.forEach(trigger => trigger.addEventListener('click', toggleModal))
-
-function toggleModal() {
-    modalContainer.classList.toggle('active')
-}
-
-async function getThumbnail() {
-    let response = await fetch(url);
-    console.log(response);
-    let data = await response.json();
-    let display = "";
-    data.map((values) => {
-        display += `
-        <div class="cards">
-        <button class="deleteButton" id="${values.id}">Supprimer</button>
-        <img src=${values.imageUrl} alt=${values.title}>
-        <h3>Edit</h3>
-        </div>`
-    })
-    document.getElementById("root").innerHTML = display;
-};
-
-getThumbnail();
-*/
+import {toggleModal} from "./utils/functions.js"
 
 const url = "http://localhost:5678/api/works";
 
-const modalContainer = document.querySelector(".modal-container");
 const modalTriggers = document.querySelectorAll(".modal-trigger");
-const postsLists = document.querySelector(".posts-list");
-const addPostForm = document.querySelector(".add-post-form");
-const titleValue = document.getElementById("title-value");
 
-let output="";
-
-modalTriggers.forEach(trigger => trigger.addEventListener('click', toggleModal))
-
-function toggleModal() {
-    modalContainer.classList.toggle('active')
+const modal1 = document.getElementById('modal1');
+window.onclick = (e) => {
+    if (e.target == modal1) {
+        modal1.style.display = "none";
+    }
 }
 
-const renderPosts = (posts) => {
-    posts.forEach(post => {
-        output += `
-        <div class="cards">
-            <div class="card-body" data-id=${post._id}>
-            <img class="img-thumbnail" src="${post.imageUrl}" alt="${post.title}">
-                <a href="#" class="card-link" id="edit-post">Edit</a>
-                <a href="#" class="card-link" id="delete-post">Delete</a>
-            </div>
-        </div>
-        `;
-    })
-    postsLists.innerHTML = output;
+// Affichage de la modale
+modalTriggers.forEach(trigger => trigger.addEventListener('click', toggleModal));
+toggleModal()
+
+
+// affichage des thumbnails dans la modale
+async function getThumbnail(){
+    let response = await fetch(url);
+    let data = await response.json();
+    let display ="";
+    for (let work of data) {
+        display += `
+        <figure class="thumbnail">
+            <img class="img-thumbnail" id="${work.id}" src="${work.imageUrl}" alt="${work.title}" crossorigin="anonymous">
+            <a href="#" id="delete-link"><i class="fa-solid fa-trash-can" data-delete="${work.id}"></i></a>
+            <div id="message-delete"></div>
+			<div class = "text-edit">éditer</div>
+        </figure>
+        `
+    }
+    document.getElementById("thumbnail-modal").innerHTML = display;
+}
+getThumbnail()
+
+
+// suppression sur chaque thumbnail de la modale
+async function deleteWorks(id) {
+    try {
+        const res = await fetch(`http://localhost:5678/api/works/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+            }
+        });
+        if(!res.ok){
+            console.log("error");
+        } 
+    
+    } catch (error) {
+        console.log("erreur lors de la suppression");
+    }
 }
 
-fetch(url)
-.then(res => res.json())
-.then(data => renderPosts(data))
-
-
-postsLists.addEventListener('click', (e) => {
-    e.preventDefault();
-    let deleteButton = e.target.id == "delete-post";
-
-
-    let id = e.target.parentElement.dataset.id;
-
-    // Delete - Remove
-    if(deleteButton) {
-        fetch(`${url}/${id}`, {
-        method: "DELETE",
-    })
-        .then(res => res.json())
-        .then(data => location.reload())
+document.addEventListener("click", function(e) {
+    if (e.target.dataset.delete) {
+        e.preventDefault();
+        messageSucces(e.target.dataset.delete);
+        deleteWorks(id);
     }
 })
 
-// edit
-addPostForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    console.log(titleValue.value)
 
-    fetch(url, {
-        method: "POST",
-        headers : {
-            "content-type": "appplication/json",
-        },
-        body: JSON.stringify({
-            title: titleValue.value,
-        })
-    })
+function messageSucces(id) {
+    const pictureDelete = "Voulez-vous vraiment supprimer cette image ?";
+    if (confirm(pictureDelete) == true) {
+        deleteWorks(id)
+    } 
+}
 
-    .then(res => res.json())
-    .then(data => {
-        const dataArr = [];
-        dataArr.push(data);
-        renderPosts(dataArr);
-    })
-})

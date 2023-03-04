@@ -48,50 +48,66 @@
 			<div class="project">
 				<h2>Mes Projets</h2>
 
-				<div class="modal-container">
+				<!--- appel modal -->
+				<div class="edit">
+					<a data-toggle="modal1" href="#modal1" class="modal-btn modal-trigger"
+						data-controls-modal="#modalContent" data-backdrop="static" data-target="#modalContent">
+						<i class="fa-regular fa-pen-to-square"></i>Modifier</a>
+				</div>
+
+				<!-- modal 1 -->
+				<div class="modal-container" id="modal1" aria-hidden="true">
 					<div class="overlay modal-trigger"></div>
-					<div class="modal" role="dialog" aria-labelledby="modalTitle" aria-describedby="dialogDesc">
+					<div class="modal js-modal-stop" role="dialog" aria-labelledby="modalTitle"
+						aria-describedby="dialogDesc">
 						<button aria-label="close modal" class="close-modal modal-trigger">X</button>
 						<h2 id="modalTitle">Galerie</h2>
-						<!--
-						<div class="gallery-thumbnail" id="gallery-thumbnail"></div>
-						-->
-						<div class="container" id="root">
-							<!-- form-->
-							<div class="container">
-								<div class="rowGallery">
-									<div class="contentGallery">
-										<!--<h3>Ajouter une image</h3>
-										<form class="add-post-form" method="POST" enctype="multipart/form-data">
-											<div class="form-group">
-												<label for="title">Titre</label>
-												<input type="text" class="form-control" id="title-value">
-											</div>
+						<div class="icon-trash"></div>
+						<div id="thumbnail-modal"></div>
 
-											<div class="form-group">
-												<label>Ajoutez une image</label>
-											</div>
-											<button type="submit" class="buttonSubmit">Ajoutez image</button>
-										</form>-->
-									</div>
-								</div>
-
-								<div class="posts-list row">
-								</div>
-
-
-							</div>
-
-						</div>
-						<!-- form-->
-
+						<main class="js-document">
+							<button type="button" aria-haspopup="dialog" aria-controls="dialog">Ajouter une
+								photo</button>
+							<button type="button" class="delete-gallery">Supprimer la galerie</button>
+						</main>
 					</div>
 				</div>
-				<div class="edit">
-					<button aria-label="open modal" class="modal-btn modal-trigger" data-target="#modal3"
-						data-toggle="modal"><i class="fa-regular fa-pen-to-square"></i>Modifier</button>
+
+				<div class="js-page">
+					<div id="dialog" role="dialog" aria-labelledby="dialog-title" aria-describedby="dialog-desc"
+						aria-modal="true" aria-hidden="true" tabindex="-1" class="c-dialog">
+						<div role="document" class="c-dialog__box">
+							<button type="button" aria-label="Fermer" title="Fermer cette fenêtre modale"
+								data-dismiss="dialog">X</button>
+							<h2 id="dialog-title">Ajout photo</h2>
+
+							<form action="" method="post" enctype="multipart/form-data" id="form-add">
+								<div class="upload-container">
+									<p>
+										<label for="file">Fichier (tous formats | max. 1 Mo) :</label><br />
+										<input type="hidden" name="MAX_FILE_SIZE" value="1048576" />
+										<input type="file" id="inputFile" accept="image/jpeg,image/png,image/jpg"><br />
+									</p>
+								</div>
+								<label for="title">Titre</label>
+								<input id="title" type="text" name="title" required>
+								<label for="category">Catégorie</label>
+								<select id="categorySelect" class="category-input" name="category" required>
+									<option value="" selected></option>
+									<option value="objets">Objets</option>
+									<option value="appartements">Appartements</option>
+									<option value="hotels">Hotels & Restaurants</option>
+								</select>
+								<div class="separator"></div>
+								<input type="submit" value="Valider">
+							</form>
+						</div>
+					</div>
 				</div>
+
 			</div>
+
+
 			<div class="btns-category">
 				<button id="btnAll" data-category-id="0" class="btn-name-category">Tous</button>
 			</div>
@@ -122,6 +138,8 @@
 
 	<script type="module" src="./assets/js/script.js"></script>
 	<script type="module" src="./assets/js/modal.js"></script>
+	<script type="module" src="./assets/js/modal-form.js"></script>
+
 </body>
 
 </html>
