@@ -383,15 +383,45 @@ button.delete-gallery {
 	border: none;
 }
 
+.top-modal1 {
+	display: flex;
+	justify-content: space-between;
+	width: 100%
+}
+
 .top-modal2 {
 	display: flex;
 	justify-content: space-between;
 	width: 100%
 }
 
-.previous_icon {
+.prev-modal1 {
 	cursor: pointer;
 }
+
+.close1 {
+	color: #aaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+	cursor: pointer
+}
+
+.close2 {
+	color: #aaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+	cursor: pointer
+}
+
+.close:hover,
+.close:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+}
+
 
 /* modal thumbnail delete */
 #thumbnail-modal {

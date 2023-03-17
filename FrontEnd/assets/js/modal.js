@@ -4,8 +4,10 @@ const url = "http://localhost:5678/api/works";
 // modal 1 et 2 - Affichage
 const modal1 = document.getElementById("modal-1");
 const modal2 = document.getElementById("modal-2");
-const btnOpenModal1 = document.getElementById("open-modal-1");
+const openModalBtn1 = document.getElementById("open-modal-1");
 const btnOpenModal2 = document.getElementById("open-modal-2");
+const closeModalBtn1 = document.querySelector(".close1");
+const closeModalBtn2 = document.querySelector(".close2");
 
 //modal2 - ajout photo
 const thumbnailModal = document.getElementById("modal-2");
@@ -14,9 +16,7 @@ const title = document.querySelector("#title_input");
 const category = document.querySelector("#category_input");
 const displayPicture = thumbnailModal.querySelector(".display-picture");
 
-btnOpenModal1.onclick = () => {
-  modal1.style.display = "block";
-}
+
 
 btnOpenModal2.onclick = () => {
   modal1.style.display = "none"; // Fermer la modale 1
@@ -32,6 +32,23 @@ window.onclick = (e) =>  {
   }
 }
 
+openModalBtn1.addEventListener("click", openModal1);
+
+function openModal1() {
+    modal1.style.display = "block";
+  }
+
+closeModalBtn1.addEventListener("click", closeModal1);
+function closeModal1() {
+    modal1.style.display = "none";
+}
+
+closeModalBtn2.addEventListener("click", closeModal2);
+function closeModal2() {
+    modal2.style.display = "none";
+}
+  
+  
 
 // affichage des thumbnails dans la modale
 async function getThumbnail(){
@@ -76,18 +93,16 @@ async function deleteProject(id) {
 
 window.addEventListener("click", (e) =>  {
     if (e.target.dataset.delete) {
-        messageSucces(e.target.dataset.delete);
         e.preventDefault();
-        getThumbnail()
+        messageSucces(e.target.dataset.delete);
+    }
+    function messageSucces(id) {
+        const pictureDelete = "Voulez-vous vraiment supprimer cette image ?";
+        if (confirm(pictureDelete) == true) {
+            deleteProject(id);
+        } 
     }
 })
-
-function messageSucces(id) {
-    const pictureDelete = "Voulez-vous vraiment supprimer cette image ?";
-    if (confirm(pictureDelete) == true) {
-        deleteProject(id);
-    } 
-}
 
 
 // 2ème modale - ajout photo

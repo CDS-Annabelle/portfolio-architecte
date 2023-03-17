@@ -3,7 +3,6 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>Sophie Bluel - Architecte d'intérieur</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,6 +11,7 @@
 	<script src="https://kit.fontawesome.com/db96ba9725.js" crossorigin="anonymous"></script>
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
+	<title>Sophie Bluel - Architecte d'intérieur</title>
 </head>
 
 <body>
@@ -55,6 +55,9 @@
 
 				<div id="modal-1" class="modal">
 					<div class="modal-content">
+						<div class="top-modal1">
+							<span class="close1">&times;</span>
+						</div>
 						<h2 id="modalTitle">Galerie</h2>
 						<div class="icon-trash"></div>
 						<div id="thumbnail-modal"></div>
@@ -72,7 +75,7 @@
 				<div class="modal-content">
 					<div class="top-modal2">
 						<i class="fa-solid fa-arrow-left-long prev-modal1"></i>
-						<i class="fa-solid fa-xmark close-modal2"></i>
+						<span class="close2">&times;</span>
 					</div>
 					<h2>Ajout photo</h2>
 					<form id="form-add">
@@ -88,7 +91,7 @@
 							<input type="text" name="title" id="title_input">
 							<label for="category_input">Catégorie</label>
 							<select name="category" id="category_input">
-								<option value="0"></option>
+								<option value=""></option>
 								<option value="1">Objets</option>
 								<option value="2">Appartements</option>
 								<option value="3">Hotels & restaurants</option>
