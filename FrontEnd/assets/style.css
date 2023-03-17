@@ -332,7 +332,7 @@ button#open-modal-1 {
 
 .modal {
 	display: none;
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 0;
 	width: 100%;
@@ -348,7 +348,7 @@ button#open-modal-1 {
 	align-items: center;
 	background-color: white;
 	padding: 20px;
-	margin: 10% auto;
+	margin: 2% auto;
 	max-width: 500px;
 }
 
@@ -486,48 +486,6 @@ hr {
 	width: 230px;
 }
 
-/*
-#modal-1>header {
-	justify-content: flex-end;
-}
-
-#modal-1>.modal_content {
-	display: grid;
-	grid-template-columns: repeat(5, 1fr);
-	gap: 10px;
-}
-
-.editing_card {
-	position: relative;
-}
-
-.editing_card>figcaption {
-	font-size: 12px;
-	font-weight: 400;
-}
-
-.editing_card .project_supression_trigger {
-	width: 17px;
-	height: 17px;
-	position: absolute;
-	top: 5px;
-	right: 5px;
-	border-radius: 2px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background-color: #000;
-	color: #fff;
-	font-size: 10px;
-	cursor: pointer;
-}
-
-.gallery_supression_trigger {
-	color: #d65353;
-	margin: -10px 0 10px 0;
-	cursor: pointer;
-}
-*/
 #modal-2 form {
 	width: 70%;
 }
