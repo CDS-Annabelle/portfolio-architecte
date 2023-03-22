@@ -47,6 +47,12 @@ closeModalBtn2.addEventListener("click", closeModal2);
 function closeModal2() {
     modal2.style.display = "none";
 }
+
+const previousModal1 = document.querySelector(".prev-modal1");
+previousModal1.addEventListener("click", () => {
+    closeModal2(openModal1);
+    openModal1(closeModal2);
+});
   
   
 
