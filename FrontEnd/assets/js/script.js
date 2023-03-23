@@ -11,7 +11,16 @@ const token =window.sessionStorage.getItem("token");
 if (token != null)
 {
     edit.style.visibility = "visible";
+    log.innerHTML = "Logout";
+    log.addEventListener("click", (e) => {
+        sessionStorage.removeItem("token");
+        window.location.href = "index.html";
+        log.href ="index.html";
+    });
 }
+
+
+
 
 
 displayGalleryMenu(categories);
