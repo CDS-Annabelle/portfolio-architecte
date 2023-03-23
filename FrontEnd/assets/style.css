@@ -552,6 +552,7 @@ hr {
 
 #modal-2 input[type="submit"] {
 	margin-top: 80px;
+	cursor: pointer;
 }
 
 #modal-2 .button-off {

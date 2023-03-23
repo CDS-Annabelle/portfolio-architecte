@@ -5,22 +5,19 @@ import {displayGalleryObjectsByCategoryId, addListenersToCategoryButtons, displa
 const works = await getWorks();
 const categories = await getCategories();
 
-/* affichage du texte modifier lorsque l'utilisateur est connecté */
+/* affichage du texte modifier lorsque l'utilisateur est connecté & déconnexion*/
 const edit = document.querySelector (".edit")
 const token =window.sessionStorage.getItem("token");
 if (token != null)
 {
     edit.style.visibility = "visible";
     log.innerHTML = "Logout";
-    log.addEventListener("click", (e) => {
+    log.addEventListener("click", () => {
         sessionStorage.removeItem("token");
         window.location.href = "index.html";
         log.href ="index.html";
     });
 }
-
-
-
 
 
 displayGalleryMenu(categories);

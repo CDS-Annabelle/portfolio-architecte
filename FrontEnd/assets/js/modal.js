@@ -1,3 +1,7 @@
+import {getCategories, getWorks} from "./utils/data.js"
+import {displayGalleryObjectsByCategoryId, addListenersToCategoryButtons, displayGalleryMenu} from "./utils/functions.js"
+const works = await getWorks();
+const categories = await getCategories();
 
 const url = "http://localhost:5678/api/works";
 
@@ -106,6 +110,7 @@ window.addEventListener("click", (e) =>  {
         const pictureDelete = "Voulez-vous vraiment supprimer cette image ?";
         if (confirm(pictureDelete) == true) {
             deleteProject(id);
+            getThumbnail()
         } 
     }
 })
@@ -172,11 +177,15 @@ formAddPicture.addEventListener("submit", (e) => {
                 fetch(url)
                     .then((value) => {
                         if (value.ok) {
+                            alert("Votre image a bien été ajoutée");
+                            closeModal2(openModal1);
+                            openModal1(closeModal2);
+                            displayGalleryObjectsByCategoryId(works, "0");
                             return value.json();
                         }
                     })
                     .then(() => {
-                        getThumbnail();
+                       getThumbnail();
                     });
             })
             .catch((error) => {
@@ -185,6 +194,7 @@ formAddPicture.addEventListener("submit", (e) => {
     }
 });
 
+
 const buttonEffect = (button) => {
     if (image.value && title.value && category.value) {
         button.classList.remove("button-off");
@@ -192,5 +202,9 @@ const buttonEffect = (button) => {
         button.classList.add("button-off");
     }
 };
+
+
+
+
 
 
