@@ -139,7 +139,7 @@ const formAddPicture = document.querySelector("#form-add");
 formAddPicture.addEventListener("input", () => buttonEffect(submitButton));
 
 // Ajout photo
-formAddPicture.addEventListener("submit", (e) => {
+formAddPicture.addEventListener("submit", async e => {
     e.preventDefault();
     const addThumbnail = new FormData(formAddPicture);
 
@@ -165,35 +165,23 @@ formAddPicture.addEventListener("submit", (e) => {
             errorContainer.innerText = "Choisissez une image !";
         }
     } else {
-        fetch(url, {
+        const res = await fetch(url, {
             method: "POST",
             headers: {
                 Authorization: "Bearer " + sessionStorage.getItem('token'),
             },
             body: addThumbnail,
         })
-            .then(() => {
-                gallery.innerHTML = "";
-                fetch(url)
-                    .then((value) => {
-                        if (value.ok) {
-                            alert("Votre image a bien été ajoutée");
-                            closeModal2(openModal1);
-                            openModal1(closeModal2);
-                            displayGalleryObjectsByCategoryId(works, "0");
-                            return value.json();
-                        }
-                    })
-                    .then(() => {
-                       getThumbnail();
-                    });
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }
-});
-
+            if (res.ok) {
+                alert("Votre image a bien été ajoutée");
+                closeModal2(openModal1);
+                openModal1(closeModal2);
+                displayGalleryObjectsByCategoryId(works, "0");
+                getThumbnail();
+                return value.json();
+             }
+        }
+    });
 
 const buttonEffect = (button) => {
     if (image.value && title.value && category.value) {

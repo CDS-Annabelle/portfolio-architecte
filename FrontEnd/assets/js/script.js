@@ -6,11 +6,13 @@ const works = await getWorks();
 const categories = await getCategories();
 
 /* affichage du texte modifier lorsque l'utilisateur est connecté & déconnexion*/
-const edit = document.querySelector (".edit")
+const edit = document.querySelector (".edit");
+const admin = document.querySelector (".admin");
 const token =window.sessionStorage.getItem("token");
 if (token != null)
 {
     edit.style.visibility = "visible";
+    admin.style.visibility = "visible";
     log.innerHTML = "Logout";
     log.addEventListener("click", () => {
         sessionStorage.removeItem("token");

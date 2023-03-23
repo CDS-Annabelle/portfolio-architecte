@@ -479,6 +479,37 @@ hr {
 	width: 100%;
 }
 
+/* admin*/
+.admin {
+	background: #000;
+	padding: 15px;
+	visibility: hidden;
+	width: 100%;
+	margin: 0;
+	text-align: center;
+}
+
+.admin.active {
+	visibility: visible;
+}
+
+.mode-edit {
+	color: #eee;
+	text-align: center;
+	padding-right: 25px;
+}
+
+i.fa-admin {
+	color: #fff;
+}
+
+.mode-change {
+	color: #000;
+	background: #fff;
+	border-radius: 25px;
+	padding: 8px;
+	text-align: center;
+}
 
 /*new code*/
 
