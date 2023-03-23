@@ -20,6 +20,9 @@ if (token != null)
 }
 
 
+
+
+
 displayGalleryMenu(categories);
 displayGalleryObjectsByCategoryId(works, "0");
 addListenersToCategoryButtons(works, categories);
