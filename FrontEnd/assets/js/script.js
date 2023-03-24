@@ -11,7 +11,7 @@ const admin = document.querySelector (".admin");
 const token =window.sessionStorage.getItem("token");
 if (token != null)
 {
-    document.querySelector("body").style.paddingTop = "45px";
+    document.querySelector("body").style.paddingTop = "55px";
     edit.style.visibility = "visible";
     admin.style.visibility = "visible";
     log.innerHTML = "Logout";
