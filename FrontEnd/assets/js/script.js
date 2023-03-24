@@ -11,6 +11,7 @@ const admin = document.querySelector (".admin");
 const token =window.sessionStorage.getItem("token");
 if (token != null)
 {
+    document.querySelector("body").style.paddingTop = "45px";
     edit.style.visibility = "visible";
     admin.style.visibility = "visible";
     log.innerHTML = "Logout";
@@ -20,7 +21,6 @@ if (token != null)
         log.href ="index.html";
     });
 }
-
 
 displayGalleryMenu(categories);
 displayGalleryObjectsByCategoryId(works, "0");

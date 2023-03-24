@@ -110,7 +110,7 @@ window.addEventListener("click", (e) =>  {
         const pictureDelete = "Voulez-vous vraiment supprimer cette image ?";
         if (confirm(pictureDelete) == true) {
             deleteProject(id);
-            getThumbnail()
+            getThumbnail();
         } 
     }
 })
@@ -165,23 +165,24 @@ formAddPicture.addEventListener("submit", async e => {
             errorContainer.innerText = "Choisissez une image !";
         }
     } else {
-        const res = await fetch(url, {
+        const value = await fetch(url, {
             method: "POST",
             headers: {
                 Authorization: "Bearer " + sessionStorage.getItem('token'),
             },
             body: addThumbnail,
         })
-            if (res.ok) {
+            if (value.ok) {
                 alert("Votre image a bien été ajoutée");
                 closeModal2(openModal1);
                 openModal1(closeModal2);
                 displayGalleryObjectsByCategoryId(works, "0");
-                getThumbnail();
+                displayPicture.style ="";
                 return value.json();
              }
         }
     });
+
 
 const buttonEffect = (button) => {
     if (image.value && title.value && category.value) {
@@ -190,6 +191,7 @@ const buttonEffect = (button) => {
         button.classList.add("button-off");
     }
 };
+
 
 
 
