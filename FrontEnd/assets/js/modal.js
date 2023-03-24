@@ -1,6 +1,6 @@
 import {getCategories, getWorks} from "./utils/data.js"
-import {displayGalleryObjectsByCategoryId, addListenersToCategoryButtons, displayGalleryMenu} from "./utils/functions.js"
-const works = await getWorks();
+import {displayGalleryObjectsByCategoryId, addListenersToCategoryButtons} from "./utils/functions.js"
+
 const categories = await getCategories();
 
 const url = "http://localhost:5678/api/works";
@@ -106,15 +106,18 @@ window.addEventListener("click", (e) =>  {
         e.preventDefault();
         messageSucces(e.target.dataset.delete);
     }
-    function messageSucces(id) {
-        const pictureDelete = "Voulez-vous vraiment supprimer cette image ?";
-        if (confirm(pictureDelete) == true) {
-            deleteProject(id);
-            getThumbnail();
-        } 
-    }
 })
 
+async function messageSucces(id) {
+    const pictureDelete = "Voulez-vous vraiment supprimer cette image ?";
+    if (confirm(pictureDelete) == true) {
+        deleteProject(id);
+        getThumbnail();
+        const works = await getWorks();
+        displayGalleryObjectsByCategoryId(works, "0");
+        addListenersToCategoryButtons(works, categories);
+    } 
+}
 
 // 2ème modale - ajout photo
 // upload image
@@ -146,43 +149,11 @@ formAddPicture.addEventListener("submit", async e => {
     // Erreurs dans le formulaire
     if (!addThumbnail.get("image") || !addThumbnail.get("title") || !addThumbnail.get("category")
     ) {
-        const errorContainer = document.createElement("div");
-        errorContainer.classList.add("error_form");
-        formAddPicture.insertBefore(errorContainer, submitButton);
-        let errorForm = document.querySelector(".error_form");
-        if (errorForm) {
-            formAddPicture.removeChild(errorForm);
-        }
-
-        // Affichage des erreurs
-        if (!addThumbnail.get("category")) {
-            errorContainer.innerText = "Choisissez une catégorie !";
-        }
-        if (!addThumbnail.get("title")) {
-            errorContainer.innerText = "Renseignez un titre !";
-        }
-        if (!addThumbnail.get("image")) {
-            errorContainer.innerText = "Choisissez une image !";
-        }
+        generateFormError(addThumbnail);
     } else {
-        const value = await fetch(url, {
-            method: "POST",
-            headers: {
-                Authorization: "Bearer " + sessionStorage.getItem('token'),
-            },
-            body: addThumbnail,
-        })
-            if (value.ok) {
-                alert("Votre image a bien été ajoutée");
-                closeModal2(openModal1);
-                openModal1(closeModal2);
-                displayGalleryObjectsByCategoryId(works, "0");
-                displayPicture.style ="";
-                return value.json();
-             }
-        }
-    });
-
+        await sendNewProject(url, addThumbnail, categories)
+    }
+});
 
 const buttonEffect = (button) => {
     if (image.value && title.value && category.value) {
@@ -191,6 +162,46 @@ const buttonEffect = (button) => {
         button.classList.add("button-off");
     }
 };
+
+function generateFormError(addThumbnail) {
+    const errorContainer = document.createElement("div");
+    errorContainer.classList.add("error_form");
+    formAddPicture.insertBefore(errorContainer, submitButton);
+    let errorForm = document.querySelector(".error_form");
+    if (errorForm) {
+        formAddPicture.removeChild(errorForm);
+    }
+    // Affichage des erreurs
+    if (!addThumbnail.get("category")) {
+        errorContainer.innerText = "Choisissez une catégorie !";
+    }
+    if (!addThumbnail.get("title")) {
+        errorContainer.innerText = "Renseignez un titre !";
+    }
+    if (!addThumbnail.get("image")) {
+        errorContainer.innerText = "Choisissez une image !";
+    }
+}
+
+async function sendNewProject(url) {
+    const addThumbnail = new FormData(formAddPicture);
+    const works = await getWorks();
+    const res = await fetch(url, {
+        method: "POST",
+        headers: {
+            Authorization: "Bearer " + sessionStorage.getItem('token'),
+        },
+        body: addThumbnail,
+    })
+        if (res.ok) {
+            alert("Votre image a bien été ajoutée");
+            closeModal2(openModal1);
+            openModal1(closeModal2);
+            displayGalleryObjectsByCategoryId(works, "0");
+            displayPicture.style ="";
+            return res.json();
+        }
+}
 
 
 
