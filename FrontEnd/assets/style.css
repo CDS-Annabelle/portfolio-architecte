@@ -487,6 +487,9 @@ hr {
 	width: 100%;
 	margin: 0;
 	text-align: center;
+	position: fixed;
+	top: 0;
+	left: 0;
 }
 
 .admin.active {
@@ -595,6 +598,10 @@ i.fa-admin {
 #modal_form_validation {
 	display: flex;
 	justify-content: center;
+}
+
+.error_form {
+	visibility: visible;
 }
 
 /*---*/
