@@ -1,8 +1,10 @@
+// Appel à l'API - Tous les travaux et par catégorie
+
 const BASE_API = "http://localhost:5678/api"
 
 export async function retrieveDataFromUrl(url){
-    const response = await fetch(url);
-    const data = await response.json();
+    let response = await fetch(url);
+    let data = await response.json();
     return data;
 }
 

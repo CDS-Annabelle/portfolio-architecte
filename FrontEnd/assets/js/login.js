@@ -2,9 +2,7 @@ const url = "http://localhost:5678/api/users/login";
 const errorMessage = document.getElementById("errorMessage");
 const email = document.getElementById("email");
 const password = document.getElementById("password");
-
 const submit = document.getElementById("submit");
-
 
 const fetchHandler = async () => {
     const user = {
@@ -13,7 +11,6 @@ const fetchHandler = async () => {
     }
     const options = {
         method: "POST",
-        //JSON.stringify : convertit en chaîne JSON
         body: JSON.stringify(user),
         headers: {"Content-type": "application/json",},
     }
