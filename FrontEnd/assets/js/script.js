@@ -36,26 +36,7 @@ if (token != null) {
     });
 }
 
-// --- changement d'état des boutons de filtre ---
-/*
-btns.forEach(btn => {
-  btn.addEventListener('click', () => {
-    const categoryId = btn.getAttribute('data-category-id');
-    btns.forEach(btn => {
-      btn.classList.remove('active');
-      btn.style.backgroundColor = '';
-      btn.style.color = '';
-    });
-    btn.classList.add('active');
-    if (categoryId == 0) {
-      btn.style.backgroundColor = '#1D6154';
-      btn.style.color = 'white';
-    } else {
-      btn.style.backgroundColor = '#1D6154';
-      btn.style.color = '#fff';
-    }
-  });
-});*/
+
 
 
 
