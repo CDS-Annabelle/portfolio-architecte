@@ -116,8 +116,8 @@ a {
 	color: #000;
 }
 
-a:active {
-	font-weight: bold;
+a#log.actif {
+	font-weight: 700;
 }
 
 ol,
@@ -222,6 +222,7 @@ i.fa-admin {
 
 /* end topBar Admin */
 
+/* menu */
 nav ul {
 	display: flex;
 	align-items: center;
@@ -237,6 +238,8 @@ nav li {
 li:hover {
 	color: #B1663C;
 }
+
+/* end menu */
 
 #introduction {
 	display: flex;
@@ -440,7 +443,7 @@ button.delete-gallery {
 
 .top-modal1 {
 	display: flex;
-	justify-content: space-between;
+	justify-content: end;
 	width: 100%
 }
 
