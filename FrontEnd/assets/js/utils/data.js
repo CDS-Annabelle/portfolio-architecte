@@ -2,16 +2,16 @@
 
 const BASE_API = "http://localhost:5678/api"
 
-export async function retrieveDataFromUrl(url){
+export const retrieveDataFromUrl = async (url) => {
     let response = await fetch(url);
     let data = await response.json();
     return data;
 }
 
-export async function getWorks(){
+export const getWorks = async () => {
     return await retrieveDataFromUrl(`${BASE_API}/works`);
 }
 
-export async function getCategories(){
+export const getCategories = async () => {
     return await retrieveDataFromUrl(`${BASE_API}/categories`);
 }

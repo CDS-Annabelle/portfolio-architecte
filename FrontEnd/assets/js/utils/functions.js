@@ -1,6 +1,6 @@
 
 // affichage des projets de la galerie par catégorie
-export function displayGalleryObjectsByCategoryId(data, categoryId){
+export const displayGalleryObjectsByCategoryId = (data, categoryId) => {
     const container = document.getElementById('gallery');
     container.innerHTML = '';
 
@@ -23,7 +23,7 @@ export function displayGalleryObjectsByCategoryId(data, categoryId){
 
 
 // Ajout d'un écouteur d'évènements sur le clic, à chaque bouton de catégorie.
-export function addListenersToCategoryButtons(works, categoryId){
+export const addListenersToCategoryButtons = (works, categoryId) =>{
     const categoriesBtns = Array.from(document.querySelectorAll(".btn-name-category"));
     categoriesBtns.forEach(elt => {
         elt.addEventListener("click", (e)=>{
@@ -35,7 +35,7 @@ export function addListenersToCategoryButtons(works, categoryId){
 
 
 // Affichage du menu avec les boutons par catégorie
-export function displayGalleryMenu(categories){
+export const displayGalleryMenu = (categories) =>{
     const categoryButtonsContainer = document.querySelector(".btns-category");
     categories.forEach(elt =>{
         categoryButtonsContainer.innerHTML += `<button id="btn${elt.name}" data-category-id="${elt.id}" class="btn-name-category">${elt.name}</button>`

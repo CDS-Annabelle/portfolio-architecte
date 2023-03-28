@@ -6,7 +6,6 @@ const edit = document.querySelector (".edit");
 const admin = document.querySelector (".admin");
 const log = document.getElementById("log");
 const token = window.sessionStorage.getItem("token");
-const btns = document.querySelectorAll('.btn-name-category');
 const categoryButtonsContainer = document.querySelector(".btns-category");
 
 
