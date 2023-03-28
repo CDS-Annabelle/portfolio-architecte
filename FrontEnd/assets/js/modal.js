@@ -20,7 +20,7 @@ const formAddPicture = document.querySelector("#form-add");
 const errorContainer = document.querySelector(".error-container");
 
 
-// modal 1 et 2 - Evènements
+// modal 1 et 2 - Ajout d'évènements
 openModalBtn1.addEventListener("click", () => openModal(modalDeleteWorks));
 OpenModalBtn2.addEventListener("click", () => {
   closeModal(modalDeleteWorks);
@@ -42,24 +42,24 @@ previousModal1.addEventListener("click", () => {
     openModal(modalDeleteWorks);
 });
 
-function openModal(modal) {
+const openModal = (modal) => {
     modal.style.display = "block";
 }
 
-function closeModal(modal) {
+const closeModal = (modal) => {
     resetAddForm();
     modal.style.display = "none";
 }
   
 
-// affichage des thumbnails dans la modale
-async function getWorks(url) {
+// affichage des projets dans la modale
+const getWorks = async (url) => {
     const response = await fetch(url);
     const data = await response.json();
     return data;
   }
   
-async function getThumbnail(url) {
+const getThumbnail = async (url) => {
   try {
     const data = await getWorks(url);
     let display = "";
@@ -78,7 +78,9 @@ async function getThumbnail(url) {
   }
 }
 
-async function deleteProject(id) {
+
+// Suppression des travaux
+const deleteProject = async (id) => {
   try {
     const res = await fetch(`http://localhost:5678/api/works/${id}`, {
       method: "DELETE",
@@ -98,6 +100,8 @@ async function deleteProject(id) {
   }
 }
 
+
+// Message confirmation de demande de suppression et succès
 async function messageSuccess(id) {
   const pictureDelete = "Voulez-vous vraiment supprimer cette image ?";
   if (confirm(pictureDelete)) {
@@ -119,81 +123,87 @@ window.addEventListener("click", (e) => {
 getThumbnail(url);
 
 
-// 2ème modale - ajout photo
+// 2ème modale - Ajout photo
 const displayImage = (imageFile, content) => {
-    let uploadPicture;
-    imageFile.addEventListener("change", function () {
-        const reader = new FileReader();
-        reader.addEventListener("load", () => {
-            uploadPicture = reader.result;
-            content.style.backgroundImage = `url(${uploadPicture})`;
-        });
-        reader.readAsDataURL(imageFile.files[0]);
-        content.style.display = "block";
-    });
+  imageFile.addEventListener("change", function () {
+      const reader = new FileReader();
+      reader.addEventListener("load", () => {
+          const uploadPicture = reader.result;
+          content.style.backgroundImage = `url(${uploadPicture})`;
+      });
+      reader.readAsDataURL(imageFile.files[0]);
+      content.style.display = "block";
+  });
 };
 displayImage(imageFile, displayPicture);
         
 formAddPicture.addEventListener("input", () => buttonEffect(submitButton));
 formAddPicture.addEventListener("submit", async e => {
-    e.preventDefault();
-    const addThumbnail = new FormData(formAddPicture);
-    if (!addThumbnail.get("image").name || !addThumbnail.get("title") || !addThumbnail.get("category")) {
-        generateFormError(addThumbnail);
-    } else {
-        await sendNewProject(url, addThumbnail);
-        const works = await getWorks(url);
-        displayGalleryObjectsByCategoryId(works, "0");
-        addListenersToCategoryButtons(works, categories);
-        getThumbnail(url);
-        closeModal(thumbnailModal);
-    }
+  e.preventDefault();
+  const addThumbnail = new FormData(formAddPicture);
+  if (!addThumbnail.get("image").name || !addThumbnail.get("title") || !addThumbnail.get("category")) {
+      generateFormError(addThumbnail);
+  } else {
+      await sendNewProject(url, addThumbnail);
+      const works = await getWorks(url);
+      displayGalleryObjectsByCategoryId(works, "0");
+      addListenersToCategoryButtons(works, categories);
+      getThumbnail(url);
+      closeModal(thumbnailModal);
+  }
 });
 
+// Activation du bouton une fois les champs remplis
 const buttonEffect = (button) => {
-    const image = document.querySelector("#add-picture");
-    const title = document.querySelector("#title_input");
-    const category = document.querySelector("#category_input");
-    if (image.value && title.value && category.value) {
-        button.classList.remove("button-off");
-    } else {
-        button.classList.add("button-off");
-    }
+  const imageInput = document.querySelector("#add-picture");
+  const titleInput = document.querySelector("#title_input");
+  const categoryInput = document.querySelector("#category_input");
+  if (imageInput.value && titleInput.value && categoryInput.value) {
+    button.classList.remove("button-off");
+  } else {
+    button.classList.add("button-off");
+  }
 };
 
-function generateFormError(addThumbnail) {
-    errorContainer.innerText = "";
-    if (!addThumbnail.get("category")) {
-        errorContainer.innerText += "Choisissez une catégorie !\n";
-    }
-    if (!addThumbnail.get("title")) {
-        errorContainer.innerText += "Renseignez un titre !\n";
-    }
-    if (!addThumbnail.get("image").name) {
-        errorContainer.innerText += "Choisissez une image !";
-    }
+
+// Gestion des erreurs si champ vide
+const generateFormError = (addThumbnail) => {
+  errorContainer.innerText = "";
+  if (!addThumbnail.get("category")) {
+      errorContainer.innerText += "Choisissez une catégorie !\n";
+  }
+  if (!addThumbnail.get("title")) {
+      errorContainer.innerText += "Renseignez un titre !\n";
+  }
+  if (!addThumbnail.get("image").name) {
+      errorContainer.innerText += "Choisissez une image !";
+  }
 }
 
-async function resetAddForm() {
-    displayPicture.style ="";
-    errorContainer.innerText = "";
-    formAddPicture.reset(); // Réinitialisation du formulaire
+
+// Réinitialisation du formulaire
+const resetAddForm = async() => {
+  displayPicture.style ="";
+  errorContainer.innerText = "";
+  formAddPicture.reset(); 
 }
 
-async function sendNewProject(url, addThumbnail) {
-    const res = await fetch(url, {
-        method: "POST",
-        headers: {
-            Authorization: "Bearer " + sessionStorage.getItem('token'),
-        },
-        body: addThumbnail,
-    });
 
-    if (res.ok) {
-        alert("Votre image a bien été ajoutée");
-        resetAddForm()
-        return res.json();
-    } else {
-        throw new Error('Erreur lors de l\'ajout de l\'image');
-    }
+// Envoi du projet
+const sendNewProject = async (url, addThumbnail) => {
+  const res = await fetch(url, {
+      method: "POST",
+      headers: {
+          Authorization: "Bearer " + sessionStorage.getItem('token'),
+      },
+      body: addThumbnail,
+  });
+
+  if (res.ok) {
+      alert("Votre image a bien été ajoutée");
+      await resetAddForm()
+      return res.json();
+  } else {
+      throw new Error('Erreur lors de l\'ajout de l\'image');
+  }
 }
