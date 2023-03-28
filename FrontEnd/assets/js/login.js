@@ -4,36 +4,39 @@ const email = document.getElementById("email");
 const password = document.getElementById("password");
 const submit = document.getElementById("submit");
 
-const fetchHandler = async () => {
-    const user = {
-        email: email.value, 
-        password: password.value,
-    }
-    const options = {
-        method: "POST",
-        body: JSON.stringify(user),
-        headers: {"Content-type": "application/json",},
-    }
-    try {
-        const response = await fetch(url, options);
-    if (response.status === 200) {
+const handleResponse = async (response) => {
+    if (response.ok) {
         const userData = await response.json();
         console.log(userData);
         if (userData) {
             window.sessionStorage.setItem("userData", JSON.stringify(userData));
             window.sessionStorage.setItem("token", userData.token);
             window.location.replace("./index.html");
-            }
-        }else {
-            errorMessage.innerHTML = "Votre email et/ou mot de passe ne correspondent pas";
         }
-    } catch (error) {
-        console.log(error);        
+    } else {
+        errorMessage.innerHTML = "Votre email et/ou mot de passe ne correspondent pas";
     }
 };
 
-submit.addEventListener("click", (e) => {
-    e.preventDefault(); 
-    fetchHandler();
-});
+const fetchHandler = async (event) => {
+    event.preventDefault();
+    const user = {
+        email: email.value,
+        password: password.value,
+    };
+    const options = {
+        method: "POST",
+        body: JSON.stringify(user),
+        headers: {
+            "Content-Type": "application/json",
+        },
+    };
+    try {
+        const response = await fetch(url, options);
+        handleResponse(response);
+    } catch (error) {
+        console.log(error);
+    }
+};
 
+submit.addEventListener("click", fetchHandler);

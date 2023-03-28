@@ -1,4 +1,4 @@
-// Appel à l'API - Tous les travaux et par catégorie
+// URL de base de l'API - Récupération des données JSON de l'API pour les projets et catégories.
 
 const BASE_API = "http://localhost:5678/api"
 
