@@ -7,6 +7,7 @@ const admin = document.querySelector (".admin");
 const log = document.getElementById("log");
 const token = window.sessionStorage.getItem("token");
 const btns = document.querySelectorAll('.btn-name-category');
+const categoryButtonsContainer = document.querySelector(".btns-category");
 
 
 // Affichage de la galerie et filtre par catégories sur les boutons
