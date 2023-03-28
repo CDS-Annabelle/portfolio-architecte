@@ -37,6 +37,7 @@ if (token != null) {
 }
 
 // --- changement d'état des boutons de filtre ---
+/*
 btns.forEach(btn => {
   btn.addEventListener('click', () => {
     const categoryId = btn.getAttribute('data-category-id');
@@ -54,7 +55,7 @@ btns.forEach(btn => {
       btn.style.color = '#fff';
     }
   });
-});
+});*/
 
 
 
