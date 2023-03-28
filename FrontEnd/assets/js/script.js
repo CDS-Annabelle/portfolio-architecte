@@ -15,7 +15,7 @@ const categories = await getCategories();
 
 displayGalleryMenu(categories);
 displayGalleryObjectsByCategoryId(works, "0");
-addListenersToCategoryButtons(works, categories);
+addListenersToCategoryButtons(works);
 
 
 /* -- affichage du texte modifier lorsque l'utilisateur est connecté 

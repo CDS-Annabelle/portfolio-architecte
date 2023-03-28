@@ -23,7 +23,7 @@ export const displayGalleryObjectsByCategoryId = (data, categoryId) => {
 
 
 // Ajout d'un écouteur d'évènements sur le clic, à chaque bouton de catégorie.
-export const addListenersToCategoryButtons = (works, categoryId) =>{
+export const addListenersToCategoryButtons = (works) =>{
     const categoriesBtns = Array.from(document.querySelectorAll(".btn-name-category"));
     categoriesBtns.forEach(elt => {
         elt.addEventListener("click", (e)=>{
@@ -46,24 +46,17 @@ export const displayGalleryMenu = (categories) =>{
 
     btns.forEach(btn => {
       btn.addEventListener('click', () => {
-        const categoryId = btn.getAttribute('data-category-id');
-        btns.forEach(btn => {
-          btn.classList.remove('active');
-          btn.style.backgroundColor = '';
-          btn.style.color = '';
+        btns.forEach(btnCategory => {
+          btnCategory.style.backgroundColor = '';
+          btnCategory.style.color = '';
         });
-        btn.classList.add('active');
-        if (categoryId == 0) {
-          btn.style.backgroundColor = '#1D6154';
-          btn.style.color = 'white';
-        } else {
-          btn.style.backgroundColor = '#1D6154';
-          btn.style.color = '#fff';
-        }
+        btn.style.backgroundColor = '#1D6154';
+        btn.style.color = 'white';
       });
     });
 
-    btnAll.click(); 
+    btnAll.style.backgroundColor = '#1D6154';
+    btnAll.style.color = 'white';
 };
 
 

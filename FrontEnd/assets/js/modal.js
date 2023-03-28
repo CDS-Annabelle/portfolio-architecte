@@ -2,14 +2,13 @@ import {getCategories} from "./utils/data.js"
 import {displayGalleryObjectsByCategoryId, addListenersToCategoryButtons} from "./utils/functions.js"
 
 const url = "http://localhost:5678/api/works";
-const categories = await getCategories();
 
 
 // modal 1 et 2 - Récupération des éléments
-const modalDeleteWorks = document.getElementById("modal-1");
-const modalAddForm = document.getElementById("modal-2");
+const modal1DeleteWorks = document.getElementById("modal-1");
+const modal2AddForm = document.getElementById("modal-2");
 const openModalBtn1 = document.getElementById("open-modal-1");
-const OpenModalBtn2 = document.getElementById("open-modal-2");
+const openModalBtn2 = document.getElementById("open-modal-2");
 const closeModalBtn1 = document.querySelector(".close1");
 const closeModalBtn2 = document.querySelector(".close2");
 const thumbnailModal = document.getElementById("modal-2");
@@ -21,25 +20,25 @@ const errorContainer = document.querySelector(".error-container");
 
 
 // modal 1 et 2 - Ajout d'évènements
-openModalBtn1.addEventListener("click", () => openModal(modalDeleteWorks));
-OpenModalBtn2.addEventListener("click", () => {
-  closeModal(modalDeleteWorks);
-  openModal(modalAddForm);
+openModalBtn1.addEventListener("click", () => openModal(modal1DeleteWorks));
+openModalBtn2.addEventListener("click", () => {
+  closeModal(modal1DeleteWorks);
+  openModal(modal2AddForm);
 });
-closeModalBtn1.addEventListener("click", () => closeModal(modalDeleteWorks));
-closeModalBtn2.addEventListener("click", () => closeModal(modalAddForm));
+closeModalBtn1.addEventListener("click", () => closeModal(modal1DeleteWorks));
+closeModalBtn2.addEventListener("click", () => closeModal(modal2AddForm));
 window.addEventListener("click", (event) => {
-  if (event.target === modalDeleteWorks) {
-    closeModal(modalDeleteWorks);
-  } else if (event.target === modalAddForm) {
-    closeModal(modalAddForm);
+  if (event.target === modal1DeleteWorks) {
+    closeModal(modal1DeleteWorks);
+  } else if (event.target === modal2AddForm) {
+    closeModal(modal2AddForm);
   }
 });
 
 const previousModal1 = document.querySelector(".prev-modal1");
 previousModal1.addEventListener("click", () => {
-    closeModal(modalAddForm);
-    openModal(modalDeleteWorks);
+    closeModal(modal2AddForm);
+    openModal(modal1DeleteWorks);
 });
 
 const openModal = (modal) => {
@@ -109,7 +108,7 @@ async function messageSuccess(id) {
     await getThumbnail(url);
     const works = await getWorks(url);
     displayGalleryObjectsByCategoryId(works, "0");
-    addListenersToCategoryButtons(works, categories);
+    addListenersToCategoryButtons(works);
   }
 }
 
@@ -147,7 +146,7 @@ formAddPicture.addEventListener("submit", async e => {
       await sendNewProject(url, addThumbnail);
       const works = await getWorks(url);
       displayGalleryObjectsByCategoryId(works, "0");
-      addListenersToCategoryButtons(works, categories);
+      addListenersToCategoryButtons(works);
       getThumbnail(url);
       closeModal(thumbnailModal);
   }
