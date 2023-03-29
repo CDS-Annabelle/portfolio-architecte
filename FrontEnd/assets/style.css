@@ -418,9 +418,9 @@ button#open-modal-1 {
 	width: 70%;
 }
 
-button.delete-gallery {
-	background: white !important;
-	color: red !important;
+#delete-gallery {
+	background: none;
+	color: red;
 }
 
 .modal-content button {

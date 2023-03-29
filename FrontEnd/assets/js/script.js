@@ -20,8 +20,7 @@ addListenersToCategoryButtons(works);
 
 /* -- affichage du texte modifier lorsque l'utilisateur est connecté 
    -- déconnexion 
-   -- affichage de la topBar admin
-*/
+   -- affichage de la topBar admin */
 if (token != null) {
     document.querySelector("body").style.paddingTop = "55px";
     edit.style.visibility = "visible";

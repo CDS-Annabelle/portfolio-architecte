@@ -1,4 +1,3 @@
-import {getCategories} from "./utils/data.js"
 import {displayGalleryObjectsByCategoryId, addListenersToCategoryButtons} from "./utils/functions.js"
 
 const url = "http://localhost:5678/api/works";
@@ -12,10 +11,10 @@ const openModalBtn2 = document.getElementById("open-modal-2");
 const closeModalBtn1 = document.querySelector(".close1");
 const closeModalBtn2 = document.querySelector(".close2");
 const thumbnailModal = document.getElementById("modal-2");
-const imageFile = document.querySelector("#add-picture");
+const imageFile = document.getElementById("add-picture");
 const displayPicture = document.querySelector(".display-picture");
-const submitButton = document.querySelector("#modal_form_validation");
-const formAddPicture = document.querySelector("#form-add");
+const submitButton = document.getElementById("modal_form_validation");
+const formAddPicture = document.getElementById("form-add");
 const errorContainer = document.querySelector(".error-container");
 
 
@@ -135,20 +134,29 @@ const displayImage = (imageFile, content) => {
   });
 };
 displayImage(imageFile, displayPicture);
+
+const isTitleExists = async (url, title) => {
+  const projects = await getWorks(url);
+  return projects.some((project) => project.title === title);
+};
         
 formAddPicture.addEventListener("input", () => buttonEffect(submitButton));
 formAddPicture.addEventListener("submit", async e => {
   e.preventDefault();
+  const titleInput = document.querySelector("#title_input");
+const title = titleInput.value.trim();
   const addThumbnail = new FormData(formAddPicture);
-  if (!addThumbnail.get("image").name || !addThumbnail.get("title") || !addThumbnail.get("category")) {
-      generateFormError(addThumbnail);
-  } else {
-      await sendNewProject(url, addThumbnail);
-      const works = await getWorks(url);
-      displayGalleryObjectsByCategoryId(works, "0");
-      addListenersToCategoryButtons(works);
-      getThumbnail(url);
-      closeModal(thumbnailModal);
+  if (!title || !addThumbnail.get("category") || !addThumbnail.get("image").name) {
+    generateFormError(addThumbnail);
+    } else if (await isTitleExists(url, title)) {
+    errorContainer.innerText = "Ce projet existe déjà avec ce titre! Merci de le modifier";
+    } else {
+    await sendNewProject(url, addThumbnail);
+    const works = await getWorks(url);
+    displayGalleryObjectsByCategoryId(works, "0");
+    addListenersToCategoryButtons(works);
+    getThumbnail(url);
+    closeModal(thumbnailModal);
   }
 });
 
